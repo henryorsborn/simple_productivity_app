@@ -11,8 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class MainRecyclerViewAdapter(
-    private val days: List<Int>,
-    private val statuses: List<Boolean>,
+    private val days: List<DayContainer>,
     private val context: Context
 ) : RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder>() {
 
@@ -31,12 +30,12 @@ class MainRecyclerViewAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         ("Day ${days[position]}").also { viewHolder.dayLabel.text = it }
-        if(!statuses[position]) {
+        if(!days[position].completed) {
             viewHolder.imageView.visibility = View.INVISIBLE
         }
         viewHolder.rootView.setOnClickListener {
             val i: Intent = Intent(context, TodoActivity::class.java).apply {
-                putExtra("key", days[position])
+                putExtra("key", days[position].index)
             }
             context.startActivity(i)
         }
