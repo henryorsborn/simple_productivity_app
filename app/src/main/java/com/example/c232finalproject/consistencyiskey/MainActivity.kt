@@ -4,14 +4,9 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.lang.Exception
-import org.json.JSONException
 
-import org.json.JSONObject
 import java.io.*
 import java.lang.RuntimeException
 
@@ -29,10 +24,10 @@ class MainActivity : AppCompatActivity() {
         var fileInputStream: FileInputStream? = null
         var fileOutputStream: FileOutputStream? = null
         try {
-            fileInputStream = openFileInput("info.json")
+            fileInputStream = openFileInput("base.json")
         } catch (e: Exception){
 
-            val inputStream: InputStream = context.resources.openRawResource(R.raw.raw)
+            val inputStream: InputStream = context.resources.openRawResource(R.raw.blank)
             val inputStreamReader: InputStreamReader = InputStreamReader(inputStream)
             val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
             var line: String
@@ -47,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 text.append('\n');
             }
             try {
-                fileOutputStream = application.openFileOutput("info.json", Context.MODE_PRIVATE)
+                fileOutputStream = application.openFileOutput("base.json", Context.MODE_PRIVATE)
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
             }
@@ -62,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     fun loadData(): List<DayContainer>{
         var fileInputStream: FileInputStream? = null
-        fileInputStream = openFileInput("info.json")
+        fileInputStream = openFileInput("base.json")
         var inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
         val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
         val stringBuilder: StringBuilder = StringBuilder()
