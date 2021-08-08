@@ -16,7 +16,6 @@ class MainRecyclerViewAdapter(
 ) : RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val dayLabel: TextView = view.findViewById(R.id.day_label)
         val imageView: ImageView = view.findViewById(R.id.image_view)
         val rootView: LinearLayout = view as LinearLayout
@@ -29,7 +28,7 @@ class MainRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        ("Day ${days[position]}").also { viewHolder.dayLabel.text = it }
+        ("Day ${days[position].index}").also { viewHolder.dayLabel.text = it }
         if(!days[position].completed) {
             viewHolder.imageView.visibility = View.INVISIBLE
         }

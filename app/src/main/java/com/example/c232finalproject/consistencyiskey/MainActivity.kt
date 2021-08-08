@@ -15,12 +15,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val days: MutableList<Int> = mutableListOf()
         checkNewUser(this)
         findViewById<RecyclerView>(R.id.main_recycler).adapter = MainRecyclerViewAdapter(loadData(),this)
     }
 
-    fun checkNewUser(context: Context){
+    private fun checkNewUser(context: Context){
         var fileInputStream: FileInputStream? = null
         var fileOutputStream: FileOutputStream? = null
         try {
@@ -55,10 +54,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun loadData(): List<DayContainer>{
+    private fun loadData(): List<DayContainer>{
         var fileInputStream: FileInputStream? = null
         fileInputStream = openFileInput("base.json")
-        var inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
+        val inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
         val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
         val stringBuilder: StringBuilder = StringBuilder()
         var text: String? = null
