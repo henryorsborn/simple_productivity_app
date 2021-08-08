@@ -3,6 +3,7 @@ package com.example.c232finalproject.consistencyiskey
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.lang.Exception
@@ -16,7 +17,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         checkNewUser(this)
-        findViewById<RecyclerView>(R.id.main_recycler).adapter = MainRecyclerViewAdapter(loadData(),this)
+        val recyclerViewAdapter: RecyclerView = findViewById(R.id.main_recycler)
+        recyclerViewAdapter.layoutManager = LinearLayoutManager(this)
+        recyclerViewAdapter.adapter = MainRecyclerViewAdapter(loadData(),this)
     }
 
     private fun checkNewUser(context: Context){
