@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class MainRecyclerViewAdapter(
@@ -18,7 +19,7 @@ class MainRecyclerViewAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val dayLabel: TextView = view.findViewById(R.id.day_label)
         val imageView: ImageView = view.findViewById(R.id.image_view)
-        val rootView: LinearLayout = view as LinearLayout
+        val rootView: ConstraintLayout = view as ConstraintLayout
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
