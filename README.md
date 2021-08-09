@@ -7,4 +7,4 @@ No need for internet connection.
 Notifications will only be there for encouragement and not to advertize.
 
 ## Policy
-![Policy Meme](https://github.com/henryorsborn/simple_productivity_app/edit/main/policy.png?raw=true)
+![Policy Meme](https://github.com/henryorsborn/simple_productivity_app/blob/main/policy.png?raw=true)
