@@ -7,4 +7,4 @@ No need for internet connection.
 Notifications will only be there for encouragement and not to advertize.
 
 ## Policy
-![policy](https://user-images.githubusercontent.com/50592835/128653682-e3bf9f2c-f1fd-460f-ac61-bc0b942cca3f.png)
+![policy](https://user-images.githubusercontent.com/50592835/128653935-9ddfd3da-915f-4fb0-94c8-544ecb544e85.png)
