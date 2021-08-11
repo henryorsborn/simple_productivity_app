@@ -83,4 +83,7 @@ class TodoActivity : AppCompatActivity() {
         fileOutputStream.close()
     }
 
+    fun completeTask(index: Int) {
+        //todo implement
+    }
 }

@@ -16,7 +16,7 @@ class TodoRecyclerViewAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val descLabel: TextView = view.findViewById(R.id.day_label)
-        val imageView: ImageView = view.findViewById(R.id.image_view)
+        val imageOn: ImageView = view.findViewById(R.id.image_on)
         val rootView: ConstraintLayout = view as ConstraintLayout
     }
 
@@ -29,10 +29,12 @@ class TodoRecyclerViewAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.descLabel.text = tasks[position].name
         if(!tasks[position].completed) {
-            viewHolder.imageView.visibility = View.INVISIBLE
+            viewHolder.imageOn.visibility = View.INVISIBLE
+        } else {
+            viewHolder.imageOn.visibility = View.VISIBLE
         }
         viewHolder.rootView.setOnClickListener {
-            //todo implement
+            (context as TodoActivity).completeTask(position)
         }
     }
 

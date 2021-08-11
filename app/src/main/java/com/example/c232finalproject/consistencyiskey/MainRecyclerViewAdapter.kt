@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +17,8 @@ class MainRecyclerViewAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val dayLabel: TextView = view.findViewById(R.id.day_label)
-        val imageView: ImageView = view.findViewById(R.id.image_view)
+        val imageOn: ImageView = view.findViewById(R.id.image_on)
+        val imageOff: ImageView = view.findViewById(R.id.image_off)
         val rootView: ConstraintLayout = view as ConstraintLayout
     }
 
@@ -31,7 +31,11 @@ class MainRecyclerViewAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         ("Day ${days[position].index}").also { viewHolder.dayLabel.text = it }
         if(!days[position].completed) {
-            viewHolder.imageView.visibility = View.INVISIBLE
+            viewHolder.imageOn.visibility = View.INVISIBLE
+            viewHolder.imageOff.visibility = View.GONE
+        } else {
+            viewHolder.imageOff.visibility = View.INVISIBLE
+            viewHolder.imageOn.visibility = View.GONE
         }
         viewHolder.rootView.setOnClickListener {
             val i: Intent = Intent(context, TodoActivity::class.java).apply {
