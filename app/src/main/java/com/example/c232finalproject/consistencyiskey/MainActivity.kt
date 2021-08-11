@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.lang.Exception
-
 import java.io.*
 import java.lang.RuntimeException
 
@@ -26,12 +25,12 @@ class MainActivity : AppCompatActivity() {
         var fileInputStream: FileInputStream? = null
         var fileOutputStream: FileOutputStream? = null
         try {
-            fileInputStream = openFileInput("base.json")
+            fileInputStream = openFileInput("preferences.json")
         } catch (e: Exception){
 
             val inputStream: InputStream = context.resources.openRawResource(R.raw.blank)
-            val inputStreamReader: InputStreamReader = InputStreamReader(inputStream)
-            val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
+            val inputStreamReader = InputStreamReader(inputStream)
+            val bufferedReader = BufferedReader(inputStreamReader)
             var line: String
             val text = java.lang.StringBuilder()
             while (true) {
@@ -40,11 +39,11 @@ class MainActivity : AppCompatActivity() {
                 } catch (e1: RuntimeException){
                     break
                 }
-                text.append(line);
-                text.append('\n');
+                text.append(line)
+                text.append('\n')
             }
             try {
-                fileOutputStream = application.openFileOutput("base.json", Context.MODE_PRIVATE)
+                fileOutputStream = application.openFileOutput("preferences.json", Context.MODE_PRIVATE)
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
             }
@@ -59,9 +58,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadData(): List<DayContainer>{
         var fileInputStream: FileInputStream? = null
-        fileInputStream = openFileInput("base.json")
-        val inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
-        val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
+        fileInputStream = openFileInput("preferences.json")
+        val inputStreamReader = InputStreamReader(fileInputStream)
+        val bufferedReader = BufferedReader(inputStreamReader)
         val stringBuilder: StringBuilder = StringBuilder()
         var text: String? = null
         while ({ text = bufferedReader.readLine(); text }() != null) {
