@@ -17,9 +17,9 @@ import java.io.OutputStreamWriter
 
 class TodoActivity : AppCompatActivity() {
 
-    var index: Int? = null
-    var data: DataContainer? = null
-    var recyclerView: RecyclerView? = null
+    private var index: Int? = null
+    private var data: DataContainer? = null
+    private var recyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class TodoActivity : AppCompatActivity() {
         val inputStreamReader = InputStreamReader(fileInputStream)
         val bufferedReader = BufferedReader(inputStreamReader)
         val stringBuilder: StringBuilder = StringBuilder()
-        var text: String? = null
+        var text: String?
         while (run {
                 text = bufferedReader.readLine()
                 text
@@ -86,7 +86,16 @@ class TodoActivity : AppCompatActivity() {
         fileOutputStream.close()
     }
 
-    fun completeTask(index: Int) {
-        //todo implement
+    fun completeTask(taskIndex: Int) {
+        var tasks: List<Task>? = data?.data?.get(index ?: 0)?.tasks
+        val mutableTasks: MutableList<Task>? = tasks?.toMutableList()
+        mutableTasks?.set(taskIndex, tasks?.get(taskIndex)?.let { Task(it.name, true) } ?: Task("",false))
+        tasks = mutableTasks?.toList()
+        val dayContainer = tasks?.let { it1 -> index?.let { it2 -> DayContainer(it2, false, it1) } }
+        val dayContainers: MutableList<DayContainer> = data?.data?.toMutableList() ?: mutableListOf()
+        dayContainers[index ?: 0] = dayContainer ?: DayContainer(index ?: 0,false, listOf())
+        data = DataContainer(dayContainers)
+        recyclerView?.adapter = TodoRecyclerViewAdapter(data?.data?.get(index ?: 0)?.tasks ?: listOf(),this)
+        saveData()
     }
 }

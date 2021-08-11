@@ -57,13 +57,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData(): List<DayContainer>{
-        var fileInputStream: FileInputStream? = null
+        var fileInputStream: FileInputStream?
         fileInputStream = openFileInput("preferences.json")
         val inputStreamReader = InputStreamReader(fileInputStream)
         val bufferedReader = BufferedReader(inputStreamReader)
         val stringBuilder: StringBuilder = StringBuilder()
-        var text: String? = null
-        while ({ text = bufferedReader.readLine(); text }() != null) {
+        var text: String?
+        while (run {
+                text = bufferedReader.readLine()
+                text
+            } != null) {
             stringBuilder.append(text)
         }
         val mapper = jacksonObjectMapper()
