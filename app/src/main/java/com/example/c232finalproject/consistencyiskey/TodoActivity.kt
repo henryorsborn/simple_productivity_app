@@ -1,20 +1,19 @@
 package com.example.c232finalproject.consistencyiskey
 
-import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.BufferedReader
-import java.io.FileInputStream
 import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 
 class TodoActivity : AppCompatActivity() {
 
@@ -35,10 +34,9 @@ class TodoActivity : AppCompatActivity() {
     }
 
     private fun loadData(): List<Task>{
-        var fileInputStream: FileInputStream? = null
-        fileInputStream = openFileInput("base.json")
-        val inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
-        val bufferedReader: BufferedReader = BufferedReader(inputStreamReader)
+        val fileInputStream = openFileInput("preferences.json")
+        val inputStreamReader = InputStreamReader(fileInputStream)
+        val bufferedReader = BufferedReader(inputStreamReader)
         val stringBuilder: StringBuilder = StringBuilder()
         var text: String? = null
         while ({ text = bufferedReader.readLine(); text }() != null) {
@@ -70,12 +68,19 @@ class TodoActivity : AppCompatActivity() {
             dayContainers[index ?: 0] = dayContainer ?: DayContainer(0,false, listOf())
             data = DataContainer(dayContainers)
             recyclerView?.adapter = TodoRecyclerViewAdapter(data?.data?.get(index ?: 0)?.tasks ?: listOf(),this)
+            saveData()
+            dialog.cancel()
         }
         dialog.show()
     }
 
     private fun saveData() {
-        //todo implement
+        val fileOutputStream = openFileOutput("preferences.json", Context.MODE_PRIVATE)
+        val outputStreamWriter = OutputStreamWriter(fileOutputStream)
+        val mapper = jacksonObjectMapper()
+        mapper.writeValue(outputStreamWriter,data)
+        outputStreamWriter.close()
+        fileOutputStream.close()
     }
 
 }
