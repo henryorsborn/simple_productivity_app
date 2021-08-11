@@ -39,7 +39,10 @@ class TodoActivity : AppCompatActivity() {
         val bufferedReader = BufferedReader(inputStreamReader)
         val stringBuilder: StringBuilder = StringBuilder()
         var text: String? = null
-        while ({ text = bufferedReader.readLine(); text }() != null) {
+        while (run {
+                text = bufferedReader.readLine()
+                text
+            } != null) {
             stringBuilder.append(text)
         }
         val mapper = jacksonObjectMapper()
@@ -65,7 +68,7 @@ class TodoActivity : AppCompatActivity() {
             tasks = mutableTasks?.toList()
             val dayContainer = tasks?.let { it1 -> index?.let { it2 -> DayContainer(it2, false, it1) } }
             val dayContainers: MutableList<DayContainer> = data?.data?.toMutableList() ?: mutableListOf()
-            dayContainers[index ?: 0] = dayContainer ?: DayContainer(0,false, listOf())
+            dayContainers[index ?: 0] = dayContainer ?: DayContainer(index ?: 0,false, listOf())
             data = DataContainer(dayContainers)
             recyclerView?.adapter = TodoRecyclerViewAdapter(data?.data?.get(index ?: 0)?.tasks ?: listOf(),this)
             saveData()

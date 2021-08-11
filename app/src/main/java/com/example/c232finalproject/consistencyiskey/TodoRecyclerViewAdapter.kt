@@ -15,14 +15,14 @@ class TodoRecyclerViewAdapter(
 ) : RecyclerView.Adapter<TodoRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val descLabel: TextView = view.findViewById(R.id.day_label)
+        val descLabel: TextView = view.findViewById(R.id.desc_label)
         val imageOn: ImageView = view.findViewById(R.id.image_on)
         val rootView: ConstraintLayout = view as ConstraintLayout
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.day_item, viewGroup, false)
+            .inflate(R.layout.todo_item, viewGroup, false)
         return ViewHolder(view)
     }
 
