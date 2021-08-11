@@ -30,11 +30,11 @@ class MainRecyclerViewAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         ("Day ${days[position].index+1}").also { viewHolder.dayLabel.text = it }
-        if(!days[position].completed) {
-            viewHolder.imageOn.visibility = View.INVISIBLE
+        if(days[position].completed) {
+            viewHolder.imageOn.visibility = View.VISIBLE
             viewHolder.imageOff.visibility = View.GONE
         } else {
-            viewHolder.imageOff.visibility = View.INVISIBLE
+            viewHolder.imageOff.visibility = View.VISIBLE
             viewHolder.imageOn.visibility = View.GONE
         }
         viewHolder.rootView.setOnClickListener {
