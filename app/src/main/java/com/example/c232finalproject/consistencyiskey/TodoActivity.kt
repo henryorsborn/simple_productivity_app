@@ -1,8 +1,10 @@
 package com.example.c232finalproject.consistencyiskey
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +22,7 @@ class TodoActivity : AppCompatActivity() {
     private var index: Int? = null
     private var data: DataContainer? = null
     private var recyclerView: RecyclerView? = null
+    private var completeButton: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,11 @@ class TodoActivity : AppCompatActivity() {
         index = intent.extras?.getInt("key")
         recyclerView?.layoutManager = LinearLayoutManager(this)
         recyclerView?.adapter = TodoRecyclerViewAdapter(loadData(),this)
+        completeButton = findViewById(R.id.complete_button)
+        completeButton?.setOnClickListener {
+            completeDay()
+        }
+        checkCompletedDay()
     }
 
     private fun loadData(): List<Task>{
@@ -84,6 +92,47 @@ class TodoActivity : AppCompatActivity() {
         mapper.writeValue(outputStreamWriter,data)
         outputStreamWriter.close()
         fileOutputStream.close()
+        checkCompletedDay()
+    }
+
+    private fun checkCompletedDay() {
+        var flag = true
+        val tasks = data?.data?.get(index ?: 0)?.tasks
+        for(task in tasks ?: listOf()){
+            flag = flag && task.completed
+        }
+        if(tasks.isNullOrEmpty()){
+            flag = false
+        }
+        if(flag) {
+            completeButton?.visibility = View.VISIBLE
+        } else {
+            completeButton?.visibility = View.GONE
+        }
+
+    }
+
+    private fun completeDay() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder
+            .setCancelable(true)
+            .setMessage("Would you like to mark today task as complete")
+            .setPositiveButton("Yes") { dialog, _ ->
+                val tasks: List<Task>? = data?.data?.get(index ?: 0)?.tasks
+                val dayContainer = tasks?.let { it1 -> index?.let { it2 -> DayContainer(it2, true, it1) } }
+                val dayContainers: MutableList<DayContainer> = data?.data?.toMutableList() ?: mutableListOf()
+                dayContainers[index ?: 0] = dayContainer ?: DayContainer(index ?: 0,false, listOf())
+                data = DataContainer(dayContainers)
+                recyclerView?.adapter = TodoRecyclerViewAdapter(data?.data?.get(index ?: 0)?.tasks ?: listOf(),this)
+                saveData()
+                val i = Intent(this, MainActivity::class.java)
+                startActivity(i)
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.cancel()
+            }
+        val dialog = dialogBuilder.create()
+        dialog.show()
     }
 
     fun completeTask(taskIndex: Int) {

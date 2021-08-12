@@ -32,26 +32,28 @@ class TodoRecyclerViewAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.descLabel.text = tasks[position].name
-        if(!tasks[position].completed) {
-            viewHolder.imageOn.visibility = View.INVISIBLE
-        } else {
+        if(tasks[position].completed) {
             viewHolder.imageOn.visibility = View.VISIBLE
+        } else {
+            viewHolder.imageOn.visibility = View.INVISIBLE
         }
         viewHolder.rootView.setOnClickListener {
-            val dialogBuilder = AlertDialog.Builder(context)
-            dialogBuilder
-                .setCancelable(true)
-                .setMessage("Would you like to mark this task as complete")
-                .setPositiveButton("Yes") { dialog, _ ->
-                    viewHolder.imageOn.visibility = View.VISIBLE
-                    (context as TodoActivity).completeTask(position)
-                    dialog.dismiss()
-                }
-                .setNegativeButton("No") { dialog, _ ->
-                    dialog.cancel()
-                }
-            val dialog = dialogBuilder.create()
-            dialog.show()
+            if(!tasks[position].completed) {
+                val dialogBuilder = AlertDialog.Builder(context)
+                dialogBuilder
+                    .setCancelable(true)
+                    .setMessage("Would you like to mark this task as complete")
+                    .setPositiveButton("Yes") { dialog, _ ->
+                        viewHolder.imageOn.visibility = View.VISIBLE
+                        (context as TodoActivity).completeTask(position)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                val dialog = dialogBuilder.create()
+                dialog.show()
+            }
         }
     }
 
