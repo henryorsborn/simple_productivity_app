@@ -117,7 +117,7 @@ class TodoActivity : AppCompatActivity() {
         dialogBuilder
             .setCancelable(true)
             .setMessage("Would you like to mark today task as complete")
-            .setPositiveButton("Yes") { dialog, _ ->
+            .setPositiveButton("Yes") { _, _ ->
                 val tasks: List<Task>? = data?.data?.get(index ?: 0)?.tasks
                 val dayContainer = tasks?.let { it1 -> index?.let { it2 -> DayContainer(it2, true, it1) } }
                 val dayContainers: MutableList<DayContainer> = data?.data?.toMutableList() ?: mutableListOf()
