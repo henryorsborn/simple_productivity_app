@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
+
 class MainRecyclerViewAdapter(
     private val days: List<DayContainer>,
     private val context: Context

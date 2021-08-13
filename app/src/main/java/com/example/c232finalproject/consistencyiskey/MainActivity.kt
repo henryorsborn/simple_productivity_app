@@ -57,8 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData(): List<DayContainer>{
-        var fileInputStream: FileInputStream?
-        fileInputStream = openFileInput("preferences.json")
+        val fileInputStream: FileInputStream?  = openFileInput("preferences.json")
         val inputStreamReader = InputStreamReader(fileInputStream)
         val bufferedReader = BufferedReader(inputStreamReader)
         val stringBuilder: StringBuilder = StringBuilder()

@@ -147,4 +147,24 @@ class TodoActivity : AppCompatActivity() {
         recyclerView?.adapter = TodoRecyclerViewAdapter(data?.data?.get(index ?: 0)?.tasks ?: listOf(),this)
         saveData()
     }
+
+    fun deleteTask(taskIndex: Int){
+        val isCompleted = data?.data?.get(index ?: 0)?.completed ?: false
+        var tasks: List<Task>? = data?.data?.get(index ?: 0)?.tasks
+        val mutableTasks: MutableList<Task> = mutableListOf()
+        if (tasks != null) {
+            for(i in tasks.indices){
+                if(i != taskIndex){
+                    mutableTasks.add(tasks[i])
+                }
+            }
+        }
+        tasks = mutableTasks.toList()
+        val dayContainer = tasks.let { it1 -> index?.let { it2 -> DayContainer(it2, isCompleted, it1) } }
+        val dayContainers: MutableList<DayContainer> = data?.data?.toMutableList() ?: mutableListOf()
+        dayContainers[index ?: 0] = dayContainer ?: DayContainer(index ?: 0,false, listOf())
+        data = DataContainer(dayContainers)
+        recyclerView?.adapter = TodoRecyclerViewAdapter(data?.data?.get(index ?: 0)?.tasks ?: listOf(),this)
+        saveData()
+    }
 }
