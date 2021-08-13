@@ -1,11 +1,15 @@
 package com.example.c232finalproject.consistencyiskey
 
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,24 +19,41 @@ class TodoRecyclerViewAdapter(
 ) : RecyclerView.Adapter<TodoRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val descLabel: TextView = view.findViewById(R.id.day_label)
-        val imageView: ImageView = view.findViewById(R.id.image_view)
+        val descLabel: TextView = view.findViewById(R.id.desc_label)
+        val imageOn: ImageView = view.findViewById(R.id.image_on)
         val rootView: ConstraintLayout = view as ConstraintLayout
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.day_item, viewGroup, false)
+            .inflate(R.layout.todo_item, viewGroup, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.descLabel.text = tasks[position].name
-        if(!tasks[position].completed) {
-            viewHolder.imageView.visibility = View.INVISIBLE
+        if(tasks[position].completed) {
+            viewHolder.imageOn.visibility = View.VISIBLE
+        } else {
+            viewHolder.imageOn.visibility = View.INVISIBLE
         }
         viewHolder.rootView.setOnClickListener {
-            //todo implement
+            if(!tasks[position].completed) {
+                val dialogBuilder = AlertDialog.Builder(context)
+                dialogBuilder
+                    .setCancelable(true)
+                    .setMessage("Would you like to mark this task as complete")
+                    .setPositiveButton("Yes") { dialog, _ ->
+                        viewHolder.imageOn.visibility = View.VISIBLE
+                        (context as TodoActivity).completeTask(position)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                val dialog = dialogBuilder.create()
+                dialog.show()
+            }
         }
     }
 
