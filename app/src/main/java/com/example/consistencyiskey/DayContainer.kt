@@ -1,4 +1,4 @@
-package com.example.c232finalproject.consistencyiskey
+package com.example.consistencyiskey
 
 class DayContainer(
     val index: Int,

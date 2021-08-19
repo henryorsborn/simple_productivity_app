@@ -1,10 +1,11 @@
-package com.example.c232finalproject.consistencyiskey
+package com.example.consistencyiskey
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.c232finalproject.consistencyiskey.MainRecyclerViewAdapter
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.lang.Exception
 import java.io.*

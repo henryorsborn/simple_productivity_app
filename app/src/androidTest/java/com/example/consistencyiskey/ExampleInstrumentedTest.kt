@@ -1,4 +1,4 @@
-package com.example.c232finalproject.consistencyiskey
+package com.example.consistencyiskey
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

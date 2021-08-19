@@ -1,10 +1,8 @@
-package com.example.c232finalproject.consistencyiskey
+package com.example.consistencyiskey
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -16,6 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import android.view.*
+
 
 class TodoActivity : AppCompatActivity() {
 
@@ -39,6 +39,18 @@ class TodoActivity : AppCompatActivity() {
             completeDay()
         }
         checkCompletedDay()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        //makes the options menu work and open the drawer
+        menuInflater.inflate(R.menu.menu, menu)
+        val item: MenuItem = menu.getItem(0)
+        item.setOnMenuItemClickListener { menuItem ->
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+            false
+        }
+        return true
     }
 
     private fun loadData(): List<Task>{
