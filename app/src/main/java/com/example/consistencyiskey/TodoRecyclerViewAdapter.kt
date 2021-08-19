@@ -2,9 +2,7 @@ package com.example.c232finalproject.consistencyiskey
 
 import android.content.Context
 import android.content.DialogInterface
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -55,6 +53,27 @@ class TodoRecyclerViewAdapter(
                 dialog.show()
             }
         }
+        val gestureListener: GestureDetector.SimpleOnGestureListener = object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                if (velocityX > 0) {
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                    builder.setTitle("Do you want to delete this item")
+                    builder.setNegativeButton("No") { dialogInterface, _ -> dialogInterface.cancel() }
+                    builder.setPositiveButton("Yes") { _, _ -> (context as TodoActivity).deleteTask(position) }
+                    builder.setCancelable(false)
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.show()
+                }
+                return true
+            }
+        }
+        val gd = GestureDetector(context, gestureListener)
+        viewHolder.rootView.setOnTouchListener { v, event -> gd.onTouchEvent(event) }
     }
 
     override fun getItemCount() = tasks.size
