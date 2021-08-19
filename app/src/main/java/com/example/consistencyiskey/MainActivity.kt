@@ -1,4 +1,4 @@
-package com.example.c232finalproject.consistencyiskey
+package com.example.consistencyiskey
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
